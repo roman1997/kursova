@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="bootstrap.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="angular.min.js"></script>
+    <script src="moment-with-locales.js"></script>
+    <script src="script.js"></script>
+    <script src="main.js"></script>
+</head>
+
+<body ng-app="mainApp">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+                    <li><a data-toggle="tab" href="#menu1">Прості відсотки</a></li>
+                    <li><a data-toggle="tab" href="#menu2">Складні відсотки</a></li>
+                    <li><a data-toggle="tab" href="#menu3">Калькулятор</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div id="home" class="tab-pane fade ">
+                        <h3>Кредит</h3>
+                        <div id="calc">
+                            <div class="form-group">
+                                <label for="summKredit">
+                                    Сума кредита:
+                                </label>
+                                <input type="text" id="summKredit" class="form-control" onChange="calc();" onKeyUp="calc();" onClick="calc();" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="interest">
+                                    %
+                                </label>
+                                <input type="text" id="interest" class="form-control" onChange="calc();" onKeyUp="calc();" onClick="calc();" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="termin">
+                                    срок
+                                </label>
+                                <input type="text" id="termin" class="form-control" onChange="calc();" onKeyUp="calc();" onClick="calc();" value="0">
+                            </div>
+
+                            <p id="result"></p>
+                        </div>
+
+                    </div>
+                    <div id="menu1" class="tab-pane fade in active" ng-controller="easyPercent">
+                        <h3>Прості відсотки</h3>
+                        <img src="f_z1_2.gif" alt="">
+                        <p>
+                            де Pi - майбутня вартість,
+                        </p>
+                        <p>
+                            P - поточна вартість,
+                        </p>
+                        <p>
+                            r - ставка простого відсотка,
+
+
+                        </p>
+                        <p> n - кількість років, за які розраховується простий відсоток.
+                        </p>
+                        <div id="calc2">
+                            <div class="form-group">
+                                <label for="currentPrice">
+                                    Поточна вартість
+                                </label>
+                                <input type="text" id="currentPrice" class="form-control" ng-model="P">
+                            </div>
+                            <div class="form-group">
+                                <label for="rateInterest">
+                                    %
+                                </label>
+                                <input type="text" id="rateInterest" class="form-control" ng-model="r">
+                            </div>
+                            <div class="form-group">
+                                <label for="interest">
+                                    кількість років
+                                </label>
+                                <input type="text" id="srok" class="form-control" ng-model="n">
+                            </div>
+                            <h4>Приклад</h4>
+                            <p id="example">Pi = 800* (1+ 5*0,14) = 1360,00</p>
+                            <p id="result2">{{result()| currency : '₴' : 2 }}</p>
+
+                            <table class="table" id="yearTable1">
+                                <tr>
+                                   <tr class="tg-yw4l" ng-repeat="T0 in getYear() ">{{T0 | date : format : "shortDate"}}</tr>
+                            </table>
+
+
+                        </div>
+
+                    </div>
+                    <div id="menu2" class="tab-pane fade ">
+                        <h3>Складні відсотки</h3>
+                        <p>
+                            SUM = X * (1 + %)n, де
+                            <br> X — розмір початкового капіталу; % — відсоток, що нараховується за період (зазвичай становить рік, квартал або місяць); n — кількість періодів (років, кварталів, місяців). З нашого прикладу, SUM = 100 000 * (1 + 0,1)3 = 133 100 гривень.
+                        </p>
+                        <div id="calc2">
+                            <div class="form-group">
+                                <label for="currentPrice2">
+                                    Поточна вартість
+                                </label>
+                                <input type="text" id="currentPrice2" class="form-control" onChange="hardInterest();" onKeyUp="hardInterest();" onClick="hardInterest();" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="rateInterest2">
+                                    %
+                                </label>
+                                <input type="text" id="rateInterest2" class="form-control" onChange="hardInterest();" onKeyUp="hardInterest();" onClick="hardInterest();" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="srok2">
+                                    кількість років
+                                </label>
+                                <input type="text" id="srok2" class="form-control" onChange="hardInterest();" onKeyUp="hardInterest();" onClick="hardInterest();" value="0">
+                            </div>
+
+                            <p id="result3"></p>
+                        </div>
+
+                        <table class="table" id="yearTable">
+
+
+
+                        </table>
+
+                    </div>
+                    <div id="menu3" class="tab-pane fade  " ng-controller="query">
+                        <h3>Кредитний запит</h3>
+
+                        <div id="calc3">
+                            <div class="form-group">
+                                <label for="Q_request">
+                                    Розмір позики(Q)
+                                </label>
+                                <input type="text" id="Q_request" class="form-control" ng-model="Q">
+                            </div>
+                            <div class="form-group">
+                                <label for="time_current">
+                                    Момент часу (T<sub>0</sub>)
+                                </label>
+                                <input type="date" class="form-control" ng-model="T0">
+
+                            </div>
+                            <div class="form-group">
+                                <label for="payment">
+                                    Кількість платежів
+                                </label>
+                                <input type="number" min="1" id="payment" class="form-control" ng-model="m">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="payment">
+                                    Кредитна ставка (r)
+                                </label>
+                                <input type="text" id="percent" class="form-control" ng-model="r">
+                            </div>
+
+                            <p id="result4">{{result()| currency : '₴' : 2 }}</p>
+                            <h3>Чистий дохід банка - <span id="profit_b"></span></h3>
+                        </div>
+                        <table class="table" id="yearTable2">
+                        </table>
+
+                        <table class="tg table-bordered">
+                            <tr>
+                                <th class="tg-yw4l" rowspan="2">Показник</th>
+                                <th class="tg-yw4l" rowspan="2">Позика</th>
+                                <th class="tg-yw4l" colspan="5">Сплати</th>
+                            </tr>
+                            <tr>
+                                <td class="tg-yw4l" ng-repeat="i in getNumber(m) track by $index">{{$index+1}}</td>
+                            </tr>
+                            <tr>
+                                <td class="tg-yw4l">Дата</td>
+                                <td class="tg-yw4l">{{T0 | date}}</td>
+                                <td class="tg-yw4l" ng-repeat="m in periods() ">{{m | date : format : "shortDate"}}</td>
+
+                            </tr>
+                            <tr>
+                                <td class="tg-yw4l">Розмір тис грн</td>
+                                <td class="tg-yw4l" id="Q_request_price">{{Q}}</td>
+                                <td class="tg-yw4l">{{result()| currency : '₴' : 2 }}</td>
+                                <td class="tg-yw4l">20</td>
+                                <td class="tg-yw4l">30</td>
+                                <td class="tg-yw4l">30</td>
+                                <td class="tg-yw4l">-</td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="jquery.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+
+</body>
+
+</html>
