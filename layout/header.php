@@ -7,7 +7,7 @@
 <html lang="en">
 
 <head>
-    <title>COIN - Find The Best Price</title>
+    <title>CALC</title>
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/bootstrap.css">
     <meta charset="utf-8">
